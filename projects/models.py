@@ -20,14 +20,20 @@ class projectstatus(models.IntegerChoices): # لتحديد نوع الحالة �
 class project(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
+    status = models.IntegerField(
+        choices=projectstatus.choices,
+        default=projectstatus.PENDING,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(category, on_delete=models.PROTECT)
-    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    status = models.IntegerField(
-        choices=projectstatus.choices,
-        default=projectstatus.PENDING
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True
+
     )
+
 
     def __str__(self):
         return self.title
