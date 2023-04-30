@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<ul>
+    {% for task in project.task_set.all %}    <!-- طباعة قائمة المهام حيث استخدمنا العلاقة task الموجودة بين task و project -->
+        <li>
+            <form method="post" action="{% url 'task_update' task.id %}">   <!-- عنوان ال url -->
+                {% csrf_token %}
+                <input
+                    type="checkbox"
+                    name="is_completed"
+                    {% if task.is_completed %} checked {% endif %}
+                    onchange="this.form.submit()"
+                />
+                {{ task.description }}
+            </form>
+            <form method="post" action="{% url 'task_delete' task.id %}">   <!-- عنوان ال url -->
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+
+        </li>
+    {% endfor %}
+</ul>
+<!-- الان سنقوم بانشاء استمارة مهمة -->
+<form method="post" action="{% url 'task_create' %}">   <!-- عنوان ال url -->
+    {% csrf_token %}
+    <input type="hidden" value="{{project.id}}" name="project">     <!-- استخدمنا ال id  داخل project -->
+    <input type="text" name="description" placeholder="{% trans 'new task' %}"> <!-- استخدمناه لكتابة وصف المهمة-->
+    <input type="submit" value="{% trans 'add' %}">
+</form>
