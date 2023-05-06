@@ -3,9 +3,10 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from . import models
 from . import forms
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class projectlistviews(ListView):
+class projectlistviews(LoginRequiredMixin,ListView):
     model = models.project
     template_name = 'project/list.html' # هذا اسم صفحة ال html
     paginate_by = 6
@@ -21,14 +22,14 @@ class projectlistviews(ListView):
 
 # Create your views here.
 
-class projectcreateviews(CreateView):
+class projectcreateviews(LoginRequiredMixin,CreateView):
     model = models.project
     form_class = forms.projectcreateform
     template_name = 'project/create.html'
     success_url = reverse_lazy('project_list')
 
 
-class projectupdateviews(UpdateView):
+class projectupdateviews(LoginRequiredMixin,UpdateView):
     model = models.project
     form_class = forms.projectupdateform
     template_name = 'project/update.html'
@@ -39,7 +40,7 @@ class projectupdateviews(UpdateView):
 
 
 
-class projectdeleteview(DeleteView):
+class projectdeleteview(LoginRequiredMixin,DeleteView):
     model = models.project
     template_name = 'project/delete.html'
     success_url = reverse_lazy('project_list')
@@ -48,7 +49,7 @@ class projectdeleteview(DeleteView):
 
 
 
-class taskcraeteview(CreateView):
+class taskcraeteview(LoginRequiredMixin,CreateView):
     model = models.task
     fields = ['project','description']
     http_method_names = ['post']  # حددنا له ان الصفحة موجودة ولكن لغرض ال post فقط
@@ -56,7 +57,7 @@ class taskcraeteview(CreateView):
         return reverse ('project_update', args=[self.object.project.id])
 
 
-class taskupdateview(UpdateView):
+class taskupdateview(LoginRequiredMixin,UpdateView):
     model = models.task
     fields = ['is_completed']
     http_method_names = ['post']
@@ -65,7 +66,7 @@ class taskupdateview(UpdateView):
 
 
 
-class taskdeleteview(DeleteView):
+class taskdeleteview(LoginRequiredMixin,DeleteView):
     model = models.task
     def get_success_url(self):
         return reverse ('project_update', args=[self.object.project.id])
