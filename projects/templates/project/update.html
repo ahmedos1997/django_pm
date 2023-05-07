@@ -18,7 +18,7 @@
     </nav>
     <div class="row">
         <div class="col-md-3">
-            <form class="Post">
+            <form method="POST">
                 <div class="card">
                     <div class="card-body">
                         {% csrf_token %}
@@ -45,11 +45,10 @@
                                 {% trans 'Save' %}
 
                             </button>
-                            <button class="btn btn-danger">
-                                <i class="bi bi-trash"></i>
-                                {% trans 'Delete' %}
-
-                            </button>
+                            <a class="btn btn-danger" href="{% url 'project_delete' object.id %}">
+                              <i class="bi bi-trash"></i>
+                              {% trans 'Delete' %}
+                            </a>
 
                         </div>
 
