@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf.global_settings import AUTH_USER_MODEL
+from django.utils.translation import gettext as _
+
 # Create your models here.
 
 
@@ -11,10 +13,10 @@ class category(models.Model):
 
 
 class projectstatus(models.IntegerChoices): # لتحديد نوع الحالة الخاصة ب project
-    PENDING = 1, 'pending'
-    COMPLETED = 2, 'completed'
-    POSTPONED = 3, 'postponed'
-    CANCELLED = 4, 'cancelled'
+    PENDING = 1, _('pending')
+    COMPLETED = 2, _('completed')
+    POSTPONED = 3, _('postponed')
+    CANCELLED = 4, _('cancelled')
 
 
 class project(models.Model):
