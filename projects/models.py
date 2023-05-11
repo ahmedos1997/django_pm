@@ -10,6 +10,9 @@ class category(models.Model):
 
     def __str__(self):             # ستعيد لنا نتيجة عند تحويل الصنف الى سلسلة نصية
         return self.name
+    class Meta:
+        verbose_name = _('category') # خاص بتحويل الكلمة الى عربي
+        verbose_name_plural = _('category') # خاص بتحويل الكلمة الى عربي بدون الجمع s
 
 
 class projectstatus(models.IntegerChoices): # لتحديد نوع الحالة الخاصة ب project
